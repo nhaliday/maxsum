@@ -19,7 +19,7 @@ func MaxSum(in <-chan int64, out chan<- int64) {
 func main() {
 	in := make(chan int64)
 	out := make(chan int64)
-	go maxsum.MaxSum(in, out)
+	go MaxSum(in, out)
 	for {
 		var v int64
 		_, err := fmt.Scan(&v)
