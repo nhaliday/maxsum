@@ -20,13 +20,18 @@ func MaxSum(in <-chan int64, out chan<- int64) {
 }
 
 func main() {
-	in := make(chan int64)
-	out := make(chan int64)
-	var v int64
+	in := make(chan int64, 1)
+	defer close(in)
+	out := make(chan int64, 1)
 	go MaxSum(in, out)
+
+	var v int64
 	for {
 		_, err := fmt.Scan(&v)
-		if err == io.EOF {
+		if err != nil {
+			if err != io.EOF {
+				fmt.Println(err)
+			}
 			return
 		}
 		in <- v
